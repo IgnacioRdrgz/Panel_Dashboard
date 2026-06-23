@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AluTech S.A. — Dashboard Gerencial</title>
+<style>
+  :root {
+    --navy:   #1B2A4A;
+    --navy2:  #243658;
+    --copper: #C47B3A;
+    --copper2:#E8954A;
+    --silver: #E8ECF0;
+    --silver2:#F4F6F9;
+    --green:  #2A7A4B;
+    --green2: #35996000;
+    --red:    #C0392B;
+    --text:   #1B2A4A;
+    --muted:  #6B7A99;
+    --white:  #FFFFFF;
+    --radius: 10px;
+    --shadow: 0 2px 14px rgba(27,42,74,.10);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--silver2);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--copper);
+    border-radius: 6px;
+    display: grid; place-items: center;
+    font-weight: 900; color: #fff; font-size: 16px; letter-spacing: -1px;
+  }
+  .logo-text { color: #fff; font-size: 17px; font-weight: 700; letter-spacing: .3px; }
+  .logo-text span { color: var(--copper2); }
+  .header-meta { color: #9BB5D8; font-size: 12px; text-align: right; line-height: 1.5; }
+  .header-meta strong { color: #fff; }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 1280px; margin: 0 auto; padding: 24px 20px 40px; }
+
+  /* ── SECTION TITLE ── */
+  .section-head {
+    display: flex; align-items: baseline; gap: 12px;
+    margin: 28px 0 16px;
+  }
+  .section-head h2 {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.4px;
+    color: var(--muted);
+  }
+  .section-head::after {
+    content: ''; flex: 1; height: 1px; background: #D0D8E8;
+  }
+
+  /* ── KPI GRID ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .kpi-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px 18px 16px;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--copper);
+    display: flex; flex-direction: column; gap: 6px;
+    transition: transform .18s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); }
+  .kpi-card.green  { border-top-color: var(--green); }
+  .kpi-card.red    { border-top-color: var(--red); }
+  .kpi-card.navy   { border-top-color: var(--navy); }
+  .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .9px; color: var(--muted); }
+  .kpi-value { font-size: 32px; font-weight: 800; line-height: 1; color: var(--navy); }
+  .kpi-value.good  { color: var(--green); }
+  .kpi-value.warn  { color: #B7700A; }
+  .kpi-value.bad   { color: var(--red); }
+  .kpi-sub  { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 2px 7px; border-radius: 20px; font-size: 11px; font-weight: 700;
+  }
+  .badge.up   { background: #D4EDE2; color: #1A6636; }
+  .badge.down { background: #FDDEDE; color: #922020; }
+  .badge.neu  { background: #E8ECF0; color: var(--muted); }
+
+  /* ── MEJORA ANTES/DESPUES ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .compare-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .compare-card h3 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+  .compare-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .compare-label { font-size: 11px; color: var(--muted); width: 52px; flex-shrink: 0; font-weight: 600; }
+  .bar-wrap { flex: 1; background: #EAECF2; border-radius: 4px; height: 10px; overflow: hidden; }
+  .bar { height: 100%; border-radius: 4px; transition: width 1.2s cubic-bezier(.4,0,.2,1); width: 0; }
+  .bar.before { background: var(--red); }
+  .bar.after  { background: var(--green); }
+  .compare-pct { font-size: 13px; font-weight: 700; width: 40px; text-align: right; }
+  .compare-pct.before { color: var(--red); }
+  .compare-pct.after  { color: var(--green); }
+  .compare-meta { font-size: 11px; color: var(--muted); margin-top: 8px; padding-top: 8px; border-top: 1px solid #EEF0F5; }
+
+  /* ── OBRAS TABLE ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-head {
+    padding: 16px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #EEF0F5;
+  }
+  .card-head h3 { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .btn {
+    padding: 7px 14px;
+    border-radius: 6px; border: none; cursor: pointer;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: .3px;
+    transition: opacity .15s;
+  }
+  .btn:hover { opacity: .85; }
+  .btn-primary { background: var(--copper); color: #fff; }
+  .btn-ghost   { background: var(--silver); color: var(--navy); }
+  .btn-sm { padding: 5px 10px; font-size: 11px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    background: var(--silver2);
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .8px;
+    color: var(--muted);
+    border-bottom: 1px solid #DDE2EC;
+  }
+  tbody tr { border-bottom: 1px solid #F0F2F7; transition: background .1s; }
+  tbody tr:hover { background: #F8FAFD; }
+  tbody td { padding: 11px 16px; color: var(--text); }
+
+  .pill {
+    display: inline-block;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+  }
+  .pill.ok   { background: #D4EDE2; color: #1A6636; }
+  .pill.warn { background: #FFF0D5; color: #8A5700; }
+  .pill.bad  { background: #FDDEDE; color: #922020; }
+  .pill.info { background: #D8E8FD; color: #1A4080; }
+
+  /* progress mini */
+  .prog-mini { width: 90px; background: #E8ECF0; border-radius: 3px; height: 6px; display: inline-block; vertical-align: middle; }
+  .prog-mini-fill { height: 100%; border-radius: 3px; background: var(--copper); }
+
+  /* ── FORM ── */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    padding: 20px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; color: var(--muted); }
+  .form-group input, .form-group select, .form-group textarea {
+    border: 1.5px solid #D0D8E8;
+    border-radius: 6px;
+    padding: 9px 12px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text);
+    background: #fff;
+    transition: border-color .15s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--copper); }
+  .form-actions { padding: 0 20px 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* ── CHARTS (CSS) ── */
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:720px){ .chart-row { grid-template-columns: 1fr; } }
+
+  .donut-wrap { display: flex; align-items: center; gap: 18px; padding: 20px; flex-wrap: wrap; }
+  .donut-legend { display: flex; flex-direction: column; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  canvas { display: block; }
+
+  /* ── ALERTS ── */
+  .alerts { display: flex; flex-direction: column; gap: 8px; padding: 16px; }
+  .alert-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .alert-item.crit  { background: #FFF0F0; border-left: 3px solid var(--red); }
+  .alert-item.warn  { background: #FFF8ED; border-left: 3px solid #E0A020; }
+  .alert-item.info  { background: #EFF5FF; border-left: 3px solid #3B73CC; }
+  .alert-item.ok    { background: #EEF8F3; border-left: 3px solid var(--green); }
+  .alert-icon { font-size: 16px; line-height: 1.3; }
+  .alert-text { flex: 1; }
+  .alert-text strong { display: block; font-size: 12px; font-weight: 700; }
+  .alert-time { font-size: 11px; color: var(--muted); }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:600px){
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .compare-grid { grid-template-columns: 1fr; }
+    .main { padding: 16px 12px 32px; }
+    header { padding: 0 14px; }
+    .logo-text { font-size: 14px; }
+  }
+  @media(max-width:420px){
+    .kpi-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 4px; padding: 16px 20px 0; flex-wrap: wrap; }
+  .tab {
+    padding: 8px 16px;
+    border-radius: 6px 6px 0 0;
+    font-size: 12px; font-weight: 700;
+    cursor: pointer; border: none;
+    background: #E8ECF0; color: var(--muted);
+    letter-spacing: .3px;
+    transition: background .15s, color .15s;
+  }
+  .tab.active { background: var(--white); color: var(--navy); }
+  .tab-body { display: none; }
+  .tab-body.active { display: block; }
+
+  /* ── TIMELINE ── */
+  .timeline { padding: 20px; display: flex; flex-direction: column; gap: 0; }
+  .tl-item { display: flex; gap: 14px; position: relative; padding-bottom: 18px; }
+  .tl-item:not(:last-child)::before {
+    content:''; position: absolute;
+    left: 15px; top: 28px; bottom: 0; width: 2px;
+    background: #DDE2EC;
+  }
+  .tl-dot {
+    width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+    display: grid; place-items: center; font-size: 13px;
+    z-index: 1;
+  }
+  .tl-dot.done  { background: #D4EDE2; color: var(--green); }
+  .tl-dot.curr  { background: #FFF0D5; color: #B07A00; }
+  .tl-dot.pend  { background: #E8ECF0; color: var(--muted); }
+  .tl-content h4 { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .tl-content p  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">AT</div>
+    <div class="logo-text">Alu<span>Tech</span> S.A.</div>
+  </div>
+  <div class="header-meta">
+    <strong>Dashboard Gerencial</strong><br>
+    Actualizado: <span id="now"></span>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- ── KPIs PRINCIPALES ── -->
+  <div class="section-head"><h2>Indicadores Clave de Desempeño</h2></div>
+  <div class="kpi-grid" id="kpiGrid">
+    <!-- se renderizan por JS -->
+  </div>
+
+  <!-- ── ANTES / DESPUÉS ── -->
+  <div class="section-head"><h2>Impacto de la Transformación Digital</h2></div>
+  <div class="compare-grid" id="compareGrid"></div>
+
+  <!-- ── GRÁFICOS ── -->
+  <div class="section-head"><h2>Análisis Visual</h2></div>
+  <div class="chart-row">
+    <div class="card">
+      <div class="card-head"><h3>Distribución de Causas de Retrabajo</h3></div>
+      <div style="padding:20px;">
+        <canvas id="donutChart" width="220" height="220"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>Lead-Time Mensual (días promedio)</h3></div>
+      <div style="padding:20px;">
+        <canvas id="lineChart" width="400" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ALERTAS ── -->
+  <div class="section-head"><h2>Alertas y Desvíos Automáticos</h2></div>
+  <div class="card">
+    <div class="card-head">
+      <h3>Centro de Alertas</h3>
+      <span class="badge down">3 críticas</span>
+    </div>
+    <div class="alerts" id="alertsBox"></div>
+  </div>
+
+  <!-- ── OBRAS ACTIVAS ── -->
+  <div class="section-head"><h2>Obras Activas</h2></div>
+  <div class="card">
+    <div class="card-head">
+      <h3>Estado de Proyectos</h3>
+      <button class="btn btn-primary btn-sm" onclick="openModal()">+ Nueva Obra</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table id="obrasTable">
+        <thead>
+          <tr>
+            <th>N° Obra</th>
+            <th>Cliente</th>
+            <th>Tipo</th>
+            <th>Avance</th>
+            <th>Lead-Time Est.</th>
+            <th>Estado</th>
+            <th>Alerta</th>
+          </tr>
+        </thead>
+        <tbody id="obrasTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── PLAN DE IMPLEMENTACIÓN ── -->
+  <div class="section-head"><h2>Plan de Implementación — Fábrica Inteligente</h2></div>
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab(this,'t1')">Cronograma</button>
+      <button class="tab" onclick="switchTab(this,'t2')">Módulos</button>
+    </div>
+    <div id="t1" class="tab-body active">
+      <div class="timeline" id="timelineBox"></div>
+    </div>
+    <div id="t2" class="tab-body">
+      <div style="overflow-x:auto;">
+        <table id="modulesTable">
+          <thead>
+            <tr>
+              <th>Módulo</th>
+              <th>Área</th>
+              <th>Beneficio Clave</th>
+              <th>Prioridad</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="modulesTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NUEVA OBRA FORM ── -->
+  <div class="section-head"><h2>Registrar Nueva Obra</h2></div>
+  <div class="card">
+    <div class="card-head">
+      <h3>Alta de Proyecto</h3>
+      <button class="btn btn-ghost btn-sm" onclick="autoFill()">⚡ Autocompletar ejemplo</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Cliente / Desarrolladora</label>
+        <input id="fCliente" type="text" placeholder="Razón social del cliente"/>
+      </div>
+      <div class="form-group">
+        <label>Tipo de abertura</label>
+        <select id="fTipo">
+          <option value="">Seleccionar…</option>
+          <option>Ventana aluminio corrediza</option>
+          <option>Puerta PVC batiente</option>
+          <option>Cerramiento de fachada</option>
+          <option>Paño fijo con DVH</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Dirección de obra</label>
+        <input id="fDir" type="text" placeholder="Calle y número, localidad"/>
+      </div>
+      <div class="form-group">
+        <label>Arquitecto asignado</label>
+        <input id="fArq" type="text" placeholder="Nombre del arquitecto"/>
+      </div>
+      <div class="form-group">
+        <label>Fecha de relevamiento</label>
+        <input id="fFecha" type="date"/>
+      </div>
+      <div class="form-group">
+        <label>Cantidad de aberturas</label>
+        <input id="fCant" type="number" placeholder="Ej: 24" min="1"/>
+      </div>
+      <div class="form-group">
+        <label>Presupuesto estimado ($)</label>
+        <input id="fMonto" type="number" placeholder="0.00" min="0" step="1000"/>
+      </div>
+      <div class="form-group">
+        <label>Prioridad</label>
+        <select id="fPrio">
+          <option value="">Seleccionar…</option>
+          <option>Alta</option>
+          <option>Media</option>
+          <option>Baja</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" onclick="submitObra()">Crear Obra</button>
+      <button class="btn btn-ghost" onclick="clearForm()">Limpiar</button>
+    </div>
+    <div id="formMsg" style="padding:0 20px 16px;font-size:13px;color:var(--green);font-weight:700;display:none;">
+      ✅ Obra registrada correctamente en el sistema.
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ── MODAL ── -->
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;place-items:center;">
+  <div style="background:#fff;border-radius:12px;padding:28px;max-width:360px;width:90%;text-align:center;">
+    <div style="font-size:32px;margin-bottom:8px;">🏗️</div>
+    <h3 style="font-size:16px;font-weight:800;color:var(--navy);margin-bottom:8px;">Nueva Obra</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:18px;">Completá el formulario en la sección inferior o usá el botón de autocompletar para cargar datos de ejemplo.</p>
+    <button class="btn btn-primary" onclick="closeModal();scrollToForm()">Ir al formulario</button>
+    <button class="btn btn-ghost" onclick="closeModal()" style="margin-left:8px;">Cerrar</button>
+  </div>
+</div>
+
+<script>
+/* ── DATA ── */
+const kpis = [
+  { label:'Lead-Time Actual', value:'55', unit:'días', sub:'Meta: 41 días (-25%)', cls:'bad', border:'red' },
+  { label:'Retrabajos', value:'18', unit:'%', sub:'Meta: 9% (-50%)', cls:'bad', border:'red' },
+  { label:'Reclamos pendientes', value:'12', unit:'', sub:'Resp. < 48 h → SLA 90%', cls:'warn', border:'copper' },
+  { label:'Obras activas', value:'8', unit:'', sub:'3 con alerta de demora', cls:'', border:'navy' },
+  { label:'Stock disponible', value:'76', unit:'%', sub:'Meta: 100% al inicio de obra', cls:'warn', border:'copper' },
+  { label:'Facturación pend.', value:'$2.4M', unit:'', sub:'4 obras sin cierre', cls:'warn', border:'copper' },
+  { label:'SLA Postventa', value:'67', unit:'%', sub:'Meta: 90% en 48 h', cls:'bad', border:'red' },
+  { label:'Obras cerradas/mes', value:'3', unit:'', sub:'Saldo cobrado: 2', cls:'', border:'green' },
+];
+
+const compares = [
+  { title:'Lead-Time de Entrega', before:55, after:41, max:80, unit:'días', meta:'Reducción del 25% (55 → 41 días)' },
+  { title:'Índice de Retrabajos', before:18, after:9, max:30, unit:'%', meta:'Reducción del 50% (18% → 9%)' },
+  { title:'Respuesta a reclamos', before:168, after:48, max:200, unit:'hs', meta:'Resolución en máx. 48 hs hábiles' },
+  { title:'Errores CNC (manuales)', before:100, after:0, max:100, unit:'%', meta:'Eliminación total por protocolo CAD-CAM' },
+];
+
+const obras = [
+  { nro:'2024-041', cliente:'Constructora Vial Sur', tipo:'Cerramiento fachada', avance:75, leadtime:'41 días', estado:'ok', alerta:'—' },
+  { nro:'2024-038', cliente:'Estudio Bianchi & Asoc.', tipo:'Paño fijo DVH', avance:30, leadtime:'55 días', estado:'warn', alerta:'Quiebre de stock' },
+  { nro:'2024-035', cliente:'Torres del Parque SRL', tipo:'Ventana corrediza', avance:90, leadtime:'48 días', estado:'ok', alerta:'—' },
+  { nro:'2024-029', cliente:'Desarrolladora Nórdica', tipo:'Puerta PVC batiente', avance:10, leadtime:'68 días', estado:'bad', alerta:'Retrabajo detectado' },
+  { nro:'2024-025', cliente:'Hospital Privado Aconcagua', tipo:'Cerramiento fachada', avance:55, leadtime:'51 días', estado:'warn', alerta:'Diseño pendiente' },
+];
+
+const alerts = [
+  { type:'crit', icon:'🔴', title:'Retrabajo detectado — Obra #2024-029', msg:'Medidas de 3 ventanas no coinciden con obra. Se generó formulario de incidencia.', time:'Hace 2 horas' },
+  { type:'crit', icon:'🔴', title:'Quiebre de stock — Perfiles 80/40', msg:'Sin existencias para obras #2024-038 y #2024-033. Proveedor notificado automáticamente.', time:'Hace 5 horas' },
+  { type:'crit', icon:'🔴', title:'SLA vencido — Reclamo #RC-0091', msg:'Cliente Estudio Bianchi sin respuesta en 72 hs. Escalar a Gerencia Comercial.', time:'Hace 1 día' },
+  { type:'warn', icon:'🟡', title:'Lead-Time en riesgo — Obra #2024-038', msg:'Estimado actual 55 días. Meta 41 días. Revisar cronograma de producción.', time:'Hace 6 horas' },
+  { type:'info', icon:'🔵', title:'Módulo CAD-CAM: prueba piloto completada', msg:'0 errores en carga de coordenadas CNC en test de 12 aberturas. Listo para producción.', time:'Hace 1 día' },
+  { type:'ok', icon:'🟢', title:'Cierre de obra — #2024-021', msg:'Conformidad firmada digitalmente. Factura emitida. Saldo cobrado. Obra cerrada.', time:'Hace 2 días' },
+];
+
+const timeline = [
+  { status:'done', icon:'✓', title:'Diagnóstico y relevamiento', desc:'SIPOC, BPMN, FODA/CAME completados. Proceso seleccionado: Gestión de Comercialización.' },
+  { status:'done', icon:'✓', title:'Módulo digitalización de medidas (Tablets)', desc:'Herramienta seleccionada e integrada con AutoCAD. Prueba piloto: 1 obra.' },
+  { status:'curr', icon:'◎', title:'Sincronización de stock + ERP integrado', desc:'En implementación. Aviso automático de pedidos activo. Migración de datos 60%.' },
+  { status:'curr', icon:'◎', title:'Protocolo CAD-CAM / CNC', desc:'Post-procesador seleccionado. Test sin errores completado. Capacitación de operarios pendiente.' },
+  { status:'pend', icon:'○', title:'Sistema de tickets / CRM postventa', desc:'Pendiente. Definición de flujos y responsables en curso.' },
+  { status:'pend', icon:'○', title:'Cierre de obra y facturación automática', desc:'Pendiente. Coordinación entre Logística, Administración y Contabilidad.' },
+  { status:'pend', icon:'○', title:'Dashboard BI gerencial en producción', desc:'Este MVP. Integración completa con ERP en siguiente sprint.' },
+];
+
+const modules = [
+  { name:'Digitalización de medidas en obra', area:'Diseño técnico', benefit:'Elimina transcripción manual', prio:'Alta', status:'ok' },
+  { name:'CAD-CAM / Protocolo CNC', area:'Producción', benefit:'0 errores de coordenadas', prio:'Alta', status:'curr' },
+  { name:'Gestión integrada inventario', area:'Compras', benefit:'Stock en tiempo real + alertas', prio:'Alta', status:'curr' },
+  { name:'ERP / Plataforma integrada', area:'Toda la empresa', benefit:'Base de datos única', prio:'Alta', status:'curr' },
+  { name:'Sistema de tickets / CRM', area:'Ventas / Postventa', benefit:'SLA 90% en 48 hs', prio:'Media', status:'pend' },
+  { name:'Cierre de obra y facturación', area:'Administración', benefit:'Cierre automático de ciclo', prio:'Media', status:'pend' },
+];
+
+/* ── RENDER KPIs ── */
+document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
+  <div class="kpi-card ${k.border}">
+    <div class="kpi-label">${k.label}</div>
+    <div class="kpi-value ${k.cls}">${k.value}<span style="font-size:16px;font-weight:500;">${k.unit}</span></div>
+    <div class="kpi-sub">${k.sub}</div>
+  </div>`).join('');
+
+/* ── RENDER COMPARES ── */
+document.getElementById('compareGrid').innerHTML = compares.map(c => `
+  <div class="compare-card">
+    <h3>${c.title}</h3>
+    <div class="compare-row">
+      <span class="compare-label">Actual</span>
+      <div class="bar-wrap"><div class="bar before" data-w="${Math.round(c.before/c.max*100)}"></div></div>
+      <span class="compare-pct before">${c.before}${c.unit}</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-label">Meta</span>
+      <div class="bar-wrap"><div class="bar after" data-w="${Math.round(c.after/c.max*100)}"></div></div>
+      <span class="compare-pct after">${c.after}${c.unit}</span>
+    </div>
+    <div class="compare-meta">${c.meta}</div>
+  </div>`).join('');
+
+setTimeout(() => {
+  document.querySelectorAll('.bar').forEach(b => {
+    b.style.width = b.dataset.w + '%';
+  });
+}, 120);
+
+/* ── RENDER ALERTS ── */
+document.getElementById('alertsBox').innerHTML = alerts.map(a => `
+  <div class="alert-item ${a.type}">
+    <span class="alert-icon">${a.icon}</span>
+    <div class="alert-text">
+      <strong>${a.title}</strong>
+      ${a.msg}
+    </div>
+    <span class="alert-time">${a.time}</span>
+  </div>`).join('');
+
+/* ── RENDER OBRAS ── */
+document.getElementById('obrasTbody').innerHTML = obras.map(o => `
+  <tr>
+    <td><strong>${o.nro}</strong></td>
+    <td>${o.cliente}</td>
+    <td>${o.tipo}</td>
+    <td>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="prog-mini"><div class="prog-mini-fill" style="width:${o.avance}%"></div></div>
+        <span style="font-size:12px;font-weight:700;">${o.avance}%</span>
+      </div>
+    </td>
+    <td>${o.leadtime}</td>
+    <td><span class="pill ${o.estado}">${o.estado==='ok'?'En término':o.estado==='warn'?'En riesgo':'Retrasado'}</span></td>
+    <td>${o.alerta !== '—' ? `<span class="pill warn">${o.alerta}</span>` : '<span style="color:var(--muted)">—</span>'}</td>
+  </tr>`).join('');
+
+/* ── RENDER TIMELINE ── */
+document.getElementById('timelineBox').innerHTML = timeline.map(t => `
+  <div class="tl-item">
+    <div class="tl-dot ${t.status}">${t.icon}</div>
+    <div class="tl-content">
+      <h4>${t.title}</h4>
+      <p>${t.desc}</p>
+    </div>
+  </div>`).join('');
+
+/* ── RENDER MODULES ── */
+document.getElementById('modulesTbody').innerHTML = modules.map(m => `
+  <tr>
+    <td><strong>${m.name}</strong></td>
+    <td>${m.area}</td>
+    <td>${m.benefit}</td>
+    <td><span class="pill ${m.prio==='Alta'?'bad':'info'}">${m.prio}</span></td>
+    <td><span class="pill ${m.status==='ok'?'ok':m.status==='curr'?'warn':'neu'}">${m.status==='ok'?'Activo':m.status==='curr'?'En impl.':'Pendiente'}</span></td>
+  </tr>`).join('');
+
+/* ── DONUT CHART ── */
+(function(){
+  const canvas = document.getElementById('donutChart');
+  const ctx = canvas.getContext('2d');
+  const data = [
+    { label:'Error medición manual', pct:42, color:'#C0392B' },
+    { label:'Transcripción AutoCAD', pct:28, color:'#E0A020' },
+    { label:'Carga manual CNC', pct:19, color:'#3B73CC' },
+    { label:'Error de herraje', pct:11, color:'#6B7A99' },
+  ];
+  const cx = 110, cy = 110, r = 80, inner = 50;
+  let angle = -Math.PI/2;
+  data.forEach(d => {
+    const slice = (d.pct/100)*2*Math.PI;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice);
+    ctx.closePath();
+    ctx.fillStyle = d.color;
+    ctx.fill();
+    angle += slice;
+  });
+  ctx.beginPath();
+  ctx.arc(cx,cy,inner,0,2*Math.PI);
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+  ctx.fillStyle = '#1B2A4A';
+  ctx.font = 'bold 22px Segoe UI';
+  ctx.textAlign = 'center';
+  ctx.fillText('18%', cx, cy+4);
+  ctx.font = '11px Segoe UI';
+  ctx.fillStyle = '#6B7A99';
+  ctx.fillText('retrab.', cx, cy+18);
+
+  const leg = canvas.parentElement;
+  const legDiv = document.createElement('div');
+  legDiv.className = 'donut-legend';
+  legDiv.innerHTML = data.map(d=>`
+    <div class="legend-item">
+      <div class="legend-dot" style="background:${d.color}"></div>
+      <span>${d.label} <strong>${d.pct}%</strong></span>
+    </div>`).join('');
+  leg.style.display='flex';
+  leg.style.alignItems='center';
+  leg.style.gap='24px';
+  leg.style.flexWrap='wrap';
+  leg.appendChild(legDiv);
+})();
+
+/* ── LINE CHART ── */
+(function(){
+  const canvas = document.getElementById('lineChart');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const actual  = [52,54,57,55,58,55,53,55,56,null,null,null];
+  const meta    = [55,53,51,49,47,45,43,41,41,41,41,41];
+  const padL=40, padR=16, padT=16, padB=32;
+  const gW=W-padL-padR, gH=H-padT-padB;
+  const min=30, max=70;
+  const xStep = gW/(months.length-1);
+  const yScale = v => padT + gH - ((v-min)/(max-min))*gH;
+
+  ctx.strokeStyle='#DDE2EC'; ctx.lineWidth=1;
+  [40,50,60].forEach(v=>{
+    ctx.beginPath();
+    ctx.moveTo(padL, yScale(v));
+    ctx.lineTo(padL+gW, yScale(v));
+    ctx.stroke();
+    ctx.fillStyle='#6B7A99'; ctx.font='10px Segoe UI';
+    ctx.fillText(v, 4, yScale(v)+4);
+  });
+
+  months.forEach((m,i)=>{
+    ctx.fillStyle='#6B7A99'; ctx.font='10px Segoe UI'; ctx.textAlign='center';
+    ctx.fillText(m, padL+i*xStep, H-6);
+  });
+
+  function drawLine(data, color, dash=[]){
+    ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.setLineDash(dash);
+    ctx.beginPath();
+    let started=false;
+    data.forEach((v,i)=>{
+      if(v===null) return;
+      const x=padL+i*xStep, y=yScale(v);
+      started ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
+      started=true;
+    });
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  drawLine(actual, '#C0392B');
+  drawLine(meta,   '#2A7A4B', [6,4]);
+
+  ctx.fillStyle='#C0392B'; ctx.font='bold 11px Segoe UI'; ctx.textAlign='left';
+  ctx.fillText('— Actual', padL+4, padT+10);
+  ctx.fillStyle='#2A7A4B';
+  ctx.fillText('- - Meta', padL+70, padT+10);
+})();
+
+/* ── TABS ── */
+function switchTab(btn, id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-body').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+/* ── FORM ── */
+function autoFill(){
+  document.getElementById('fCliente').value = 'Torres del Parque SRL';
+  document.getElementById('fTipo').value    = 'Cerramiento de fachada';
+  document.getElementById('fDir').value     = 'Av. Colón 1234, Córdoba Capital';
+  document.getElementById('fArq').value     = 'Arq. Lucía Fernández';
+  document.getElementById('fFecha').value   = new Date(Date.now()+3*864e5).toISOString().slice(0,10);
+  document.getElementById('fCant').value    = '32';
+  document.getElementById('fMonto').value   = '1850000';
+  document.getElementById('fPrio').value    = 'Alta';
+}
+function clearForm(){
+  ['fCliente','fTipo','fDir','fArq','fFecha','fCant','fMonto','fPrio'].forEach(id=>{
+    document.getElementById(id).value='';
+  });
+  document.getElementById('formMsg').style.display='none';
+}
+function submitObra(){
+  const c = document.getElementById('fCliente').value;
+  if(!c){ alert('Completá al menos el nombre del cliente.'); return; }
+  document.getElementById('formMsg').style.display='block';
+  setTimeout(()=>{ document.getElementById('formMsg').style.display='none'; clearForm(); }, 3000);
+}
+
+/* ── MODAL ── */
+function openModal(){ document.getElementById('modal').style.display='grid'; }
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+function scrollToForm(){ document.getElementById('fCliente').scrollIntoView({behavior:'smooth'}); }
+
+/* ── FECHA ── */
+document.getElementById('now').textContent = new Date().toLocaleString('es-AR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+</script>
+</body>
+</html>
