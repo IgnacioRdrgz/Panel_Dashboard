@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AluTech · Panel de Control Técnico</title>
+<title>AluTech · Tablero Ejecutivo</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
@@ -11,9 +11,7 @@
     --bg: #0b0e18;
     --surface: #111520;
     --surface2: #181d2e;
-    --surface3: #1e2438;
     --border: #272d46;
-    --border2: #1f2438;
     --accent: #3b82f6;
     --accent2: #10b981;
     --accent3: #8b5cf6;
@@ -22,7 +20,6 @@
     --text: #e2e8f8;
     --muted: #7b82a0;
     --label: #454d6e;
-    --sidebar-w: 220px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,110 +29,149 @@
     color: var(--text);
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    padding: 20px;
   }
 
-  /* ─── TOP BAR ─── */
-  .topbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    height: 52px;
+  .container {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 30px;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .logo-section {
     display: flex;
     align-items: center;
-    padding: 0 20px;
-    gap: 16px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    flex-shrink: 0;
+    gap: 12px;
   }
-  .topbar-logo { display: flex; align-items: center; gap: 10px; }
-  .logo-square { width: 30px; height: 30px; background: var(--accent); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
-  .logo-square svg { width: 17px; height: 17px; fill: white; }
-  .logo-name { font-size: 14px; font-weight: 800; letter-spacing: -0.4px; }
-  .logo-name span { color: var(--accent); }
-  .topbar-title { font-size: 12px; color: var(--muted); margin-left: 8px; padding-left: 12px; border-left: 1px solid var(--border); }
-  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-  .topbar-date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
-  .pulse-dot { width: 8px; height: 8px; background: var(--accent2); border-radius: 50%; animation: pulse2 2s infinite; }
-  @keyframes pulse2 { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.4)} 50%{box-shadow:0 0 0 5px rgba(16,185,129,0)} }
-  .topbar-live { font-size: 11px; color: var(--accent2); font-weight: 500; }
-  .avatar { width: 28px; height: 28px; background: linear-gradient(135deg,#3b82f6,#8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; }
-
-  /* ─── LAYOUT ─── */
-  .layout { display: flex; flex: 1; overflow: hidden; }
-
-  /* ─── SIDEBAR ─── */
-  .sidebar {
-    width: var(--sidebar-w);
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    padding: 16px 10px;
+  .logo-box {
+    width: 40px;
+    height: 40px;
+    background: #1b7d4f;
+    border-radius: 8px;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex-shrink: 0;
-    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: white;
+    font-size: 20px;
   }
-  .nav-group-label { font-size: 9px; font-weight: 700; color: var(--label); text-transform: uppercase; letter-spacing: 1px; padding: 8px 8px 4px; margin-top: 6px; }
-  .nav-item {
-    display: flex; align-items: center; gap: 9px;
-    padding: 8px 10px;
+  .logo-text {
+    font-size: 18px;
+    font-weight: 800;
+  }
+  .logo-text span { color: #1b7d4f; }
+  .header-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 16px;
     border-radius: 8px;
     font-size: 12px;
-    color: var(--muted);
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.15s;
-    border: 1px solid transparent;
-    position: relative;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
   }
-  .nav-item:hover { background: var(--surface2); color: var(--text); }
-  .nav-item.active { background: rgba(59,130,246,0.1); color: var(--accent); border-color: rgba(59,130,246,0.2); }
-  .nav-item .icon { font-size: 14px; flex-shrink: 0; width: 20px; text-align: center; }
-  .nav-badge { margin-left: auto; background: var(--danger); color: white; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 10px; }
-  .nav-badge.warn { background: var(--warn); color: #1a1000; }
-  .nav-badge.ok { background: var(--accent2); color: #001a0a; }
+  .btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn-primary {
+    background: #1b7d4f;
+    border-color: #1b7d4f;
+    color: white;
+  }
+  .btn-primary:hover {
+    background: #147a47;
+  }
 
-  /* ─── MAIN ─── */
-  .main { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+  .title-section h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .title-section p {
+    font-size: 13px;
+    color: var(--muted);
+  }
 
-  /* ─── KPI ROW ─── */
-  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .kpi-card {
+  /* GRID LAYOUT */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .grid.full { grid-template-columns: 1fr; }
+  .grid.kpi { grid-template-columns: repeat(4, 1fr); }
+
+  /* KPI CIRCULARES */
+  .kpi-circular {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .circular-chart {
+    width: 120px;
+    height: 120px;
     position: relative;
-    overflow: hidden;
   }
-  .kpi-card::before {
-    content: '';
+  .circular-chart svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  .circular-bg {
+    fill: none;
+    stroke: var(--surface2);
+    stroke-width: 12;
+  }
+  .circular-fill {
+    fill: none;
+    stroke: #1b7d4f;
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s ease;
+  }
+  .circular-text {
     position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
   }
-  .kpi-card.blue::before { background: var(--accent); }
-  .kpi-card.green::before { background: var(--accent2); }
-  .kpi-card.warn::before { background: var(--warn); }
-  .kpi-card.red::before { background: var(--danger); }
-  .kpi-label { font-size: 10px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
-  .kpi-value { font-size: 28px; font-weight: 800; line-height: 1; font-family: 'JetBrains Mono', monospace; }
-  .kpi-value.blue { color: var(--accent); }
-  .kpi-value.green { color: var(--accent2); }
-  .kpi-value.warn { color: var(--warn); }
-  .kpi-value.red { color: var(--danger); }
-  .kpi-sub { font-size: 10px; color: var(--muted); margin-top: 4px; }
-  .kpi-trend { font-size: 10px; margin-top: 6px; font-weight: 600; }
-  .kpi-trend.up { color: var(--accent2); }
-  .kpi-trend.down { color: var(--danger); }
+  .kpi-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .kpi-desc {
+    font-size: 11px;
+    color: var(--muted);
+  }
 
-  /* ─── GRID 2 ─── */
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid3 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
-
-  /* ─── PANEL CARD ─── */
+  /* PANEL */
   .panel {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -143,202 +179,205 @@
     overflow: hidden;
   }
   .panel-header {
-    padding: 14px 16px 12px;
-    border-bottom: 1px solid var(--border2);
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .panel-title {
+    font-size: 13px;
+    font-weight: 600;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 8px;
   }
-  .panel-title { font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 7px; }
-  .panel-icon { font-size: 14px; }
-  .panel-actions { display: flex; gap: 6px; }
-  .btn-xs {
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    padding: 4px 9px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.15s;
+  .panel-icon { font-size: 16px; }
+  .panel-body {
+    padding: 16px 20px;
   }
-  .btn-xs:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-xs.primary { background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.4); color: var(--accent); }
-  .panel-body { padding: 14px 16px; }
 
-  /* ─── OBRAS TABLE ─── */
-  table { width: 100%; border-collapse: collapse; }
+  /* TABLA */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
   thead th {
     text-align: left;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--muted);
     text-transform: uppercase;
-    letter-spacing: 0.6px;
-    padding: 0 8px 10px;
-    border-bottom: 1px solid var(--border2);
+    letter-spacing: 0.5px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
   }
-  tbody tr { border-bottom: 1px solid var(--border2); transition: background 0.15s; }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+  }
   tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: var(--surface2); }
-  tbody td { padding: 9px 8px; font-size: 12px; }
-  td.mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
-
-  /* STATUS PILLS */
-  .pill {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
-  }
-  .pill::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
-  .pill-blue { background: rgba(59,130,246,0.1); color: var(--accent); }
-  .pill-blue::before { background: var(--accent); }
-  .pill-green { background: rgba(16,185,129,0.1); color: var(--accent2); }
-  .pill-green::before { background: var(--accent2); }
-  .pill-warn { background: rgba(245,158,11,0.1); color: var(--warn); }
-  .pill-warn::before { background: var(--warn); }
-  .pill-red { background: rgba(239,68,68,0.1); color: var(--danger); }
-  .pill-red::before { background: var(--danger); }
-  .pill-purple { background: rgba(139,92,246,0.1); color: var(--accent3); }
-  .pill-purple::before { background: var(--accent3); }
-
-  /* SEMAFORO STOCK */
-  .stock-row { display: flex; flex-direction: column; gap: 10px; }
-  .stock-item { display: flex; flex-direction: column; gap: 6px; }
-  .stock-top { display: flex; align-items: center; justify-content: space-between; }
-  .stock-name { font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 7px; }
-  .stock-emoji { font-size: 14px; }
-  .stock-pct { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; }
-  .bar-wrap { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
-  .bar-green { background: var(--accent2); }
-  .bar-warn { background: var(--warn); }
-  .bar-red { background: var(--danger); }
-  .stock-detail { font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; }
-  .stock-alert { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
-  .sa-ok { background: rgba(16,185,129,0.1); color: var(--accent2); }
-  .sa-warn { background: rgba(245,158,11,0.1); color: var(--warn); }
-  .sa-crit { background: rgba(239,68,68,0.1); color: var(--danger); }
-
-  /* ALERTAS */
-  .alert-list { display: flex; flex-direction: column; gap: 8px; }
-  .alert-item {
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    border-radius: 8px;
-    padding: 10px 12px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    position: relative;
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-  .alert-item:hover { border-color: var(--border); }
-  .alert-item.crit { border-left: 3px solid var(--danger); }
-  .alert-item.warn2 { border-left: 3px solid var(--warn); }
-  .alert-item.info { border-left: 3px solid var(--accent); }
-  .alert-item.ok2 { border-left: 3px solid var(--accent2); }
-  .alert-icon-wrap { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
-  .alert-body { flex: 1; min-width: 0; }
-  .alert-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .alert-sub { font-size: 11px; color: var(--muted); }
-  .alert-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--label); margin-top: 4px; }
-  .alert-dismiss { background: none; border: none; color: var(--label); cursor: pointer; font-size: 14px; padding: 2px; line-height: 1; }
-  .alert-dismiss:hover { color: var(--muted); }
-
-  /* CAD-CAM */
-  .cadcam-pipeline { display: flex; flex-direction: column; gap: 0; }
-  .pipeline-step {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border2);
-    position: relative;
-  }
-  .pipeline-step:last-child { border-bottom: none; }
-  .step-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
-  .step-done { background: rgba(16,185,129,0.15); color: var(--accent2); border: 1px solid rgba(16,185,129,0.3); }
-  .step-active { background: rgba(59,130,246,0.15); color: var(--accent); border: 1px solid rgba(59,130,246,0.3); animation: stepPulse 2s infinite; }
-  .step-pending { background: var(--surface2); color: var(--label); border: 1px solid var(--border2); }
-  @keyframes stepPulse { 0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0.3)} 50%{box-shadow:0 0 0 4px rgba(59,130,246,0)} }
-  .step-body { flex: 1; }
-  .step-title { font-size: 12px; font-weight: 500; margin-bottom: 1px; }
-  .step-sub { font-size: 10px; color: var(--muted); }
-  .step-status { font-size: 10px; flex-shrink: 0; }
-
-  /* MINI CHART */
-  .mini-chart { display: flex; align-items: flex-end; gap: 4px; height: 48px; }
-  .bar-col { flex: 1; border-radius: 3px 3px 0 0; position: relative; transition: opacity 0.2s; cursor: pointer; min-width: 0; }
-  .bar-col:hover { opacity: 0.8; }
-  .chart-labels { display: flex; gap: 4px; margin-top: 6px; }
-  .chart-labels span { flex: 1; text-align: center; font-size: 9px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
-
-  /* RECLAMOS */
-  .reclamo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-  .reclamo-stat { background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; padding: 10px 12px; text-align: center; }
-  .reclamo-num { font-size: 22px; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
-  .reclamo-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; }
-
-  .ticket-list { display: flex; flex-direction: column; gap: 6px; }
-  .ticket {
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    border-radius: 8px;
-    padding: 9px 11px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+  tbody td {
+    padding: 12px 0;
     font-size: 12px;
   }
-  .ticket-id { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); flex-shrink: 0; width: 72px; }
-  .ticket-desc { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ticket-action { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'Inter', sans-serif; font-size: 10px; padding: 3px 8px; border-radius: 5px; cursor: pointer; flex-shrink: 0; }
-  .ticket-action:hover { border-color: var(--accent); color: var(--accent); }
+  td.obra { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: 500; }
 
-  /* CIERRE DE OBRA */
-  .cierre-checklist { display: flex; flex-direction: column; gap: 6px; }
-  .check-item { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border2); font-size: 12px; }
-  .check-item:last-child { border-bottom: none; }
-  .check-box { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; }
-  .cb-done { background: rgba(16,185,129,0.15); border: 1px solid var(--accent2); color: var(--accent2); }
-  .cb-pending { background: var(--surface2); border: 1px solid var(--border); color: transparent; }
-  .cb-pend-txt { color: var(--muted); }
+  /* BADGES */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-blue { background: rgba(59,130,246,0.15); color: var(--accent); }
+  .badge-blue::before { content: '●'; }
+  .badge-green { background: rgba(16,185,129,0.15); color: var(--accent2); }
+  .badge-green::before { content: '●'; }
+  .badge-yellow { background: rgba(245,158,11,0.15); color: var(--warn); }
+  .badge-yellow::before { content: '⚠'; padding: 0; }
+  .badge-red { background: rgba(239,68,68,0.15); color: var(--danger); }
+  .badge-red::before { content: '⚠'; padding: 0; }
 
-  /* NPS WIDGET */
-  .nps-score { text-align: center; padding: 12px 0; }
-  .nps-num { font-size: 48px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: var(--accent2); line-height: 1; }
-  .nps-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
-  .nps-bar-row { display: flex; gap: 3px; margin-top: 12px; align-items: flex-end; height: 36px; }
-  .nps-bar { flex: 1; border-radius: 3px 3px 0 0; }
+  /* STOCK ITEM */
+  .stock-item {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .stock-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .stock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .stock-name {
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stock-emoji { font-size: 14px; }
+  .stock-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stock-percent {
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 35px;
+    text-align: right;
+  }
+  .stock-percent.crit { color: var(--danger); }
+  .stock-percent.warn { color: var(--warn); }
+  .stock-percent.ok { color: var(--accent2); }
+  .stock-bar {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .stock-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+  }
+  .stock-bar-fill.crit { background: var(--danger); }
+  .stock-bar-fill.warn { background: var(--warn); }
+  .stock-bar-fill.ok { background: var(--accent2); }
+  .stock-detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+  }
 
-  /* MOBILE NAV */
-  .mobile-nav { display: none; }
+  /* ALERTAS */
+  .alerts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .alert-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    border-left: 4px solid;
+    display: flex;
+    gap: 12px;
+    position: relative;
+  }
+  .alert-item.crit { border-left-color: var(--danger); }
+  .alert-item.warn { border-left-color: var(--warn); }
+  .alert-item.info { border-left-color: var(--accent); }
+  .alert-item.ok { border-left-color: var(--accent2); }
+  .alert-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .alert-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .alert-title {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .alert-desc {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .alert-time {
+    font-size: 10px;
+    color: var(--label);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .alert-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: var(--label);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    line-height: 1;
+  }
+  .alert-close:hover { color: var(--muted); }
 
   /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .kpi-row { grid-template-columns: repeat(2, 1fr); }
-    .grid2, .grid3 { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
+  @media (max-width: 1200px) {
+    .grid.kpi { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: 1fr; }
   }
-  @media (max-width: 600px) {
-    .kpi-row { grid-template-columns: repeat(2, 1fr); }
-    .topbar-date { display: none; }
-    .main { padding: 12px; gap: 12px; }
+  @media (max-width: 768px) {
+    .grid.kpi { grid-template-columns: repeat(2, 1fr); }
+    body { padding: 12px; }
+    .header-top { flex-direction: column; gap: 12px; }
+    .header-actions { width: 100%; }
+    .btn { flex: 1; }
   }
 
   /* MODAL */
   .modal-overlay {
     display: none;
-    position: fixed; inset: 0;
+    position: fixed;
+    inset: 0;
     background: rgba(0,0,0,0.7);
-    z-index: 200;
+    z-index: 100;
     align-items: center;
     justify-content: center;
     padding: 20px;
@@ -347,690 +386,471 @@
   .modal {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 24px;
     width: 100%;
-    max-width: 440px;
+    max-width: 500px;
   }
-  .modal-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
-  .modal-body { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
-  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
-  .btn-modal { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer; }
-  .btn-modal-sec { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
-  .btn-modal-pri { background: var(--accent); color: white; }
-  .btn-modal-green { background: var(--accent2); color: #001a0a; }
+  .modal-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .form-group input, .form-group select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 11px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    outline: none;
+  }
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--accent);
+  }
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  .btn-cancel { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
+  .btn-confirm { background: #1b7d4f; border: none; color: white; }
 
-  /* SNACKBAR */
-  .snack {
-    position: fixed; bottom: 20px; right: 20px;
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     background: var(--surface);
     border: 1px solid rgba(16,185,129,0.4);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 12px 18px;
-    font-size: 13px;
-    color: var(--text);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    z-index: 300;
-    transform: translateY(80px);
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    display: flex; align-items: center; gap: 10px;
+    font-size: 12px;
+    display: none;
+    z-index: 200;
   }
-  .snack.show { transform: translateY(0); opacity: 1; }
+  .toast.show { display: block; animation: slideIn 0.3s ease; }
+  @keyframes slideIn { from { transform: translateY(80px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="topbar-logo">
-    <div class="logo-square">
-      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22" style="fill:none;stroke:white;stroke-width:1.5"/></svg>
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-section">
+        <div class="logo-box">A</div>
+        <div>
+          <div class="logo-text">Alu<span>Tech</span></div>
+          <div style="font-size:11px;color:var(--muted);">Tablero Ejecutivo</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn" onclick="refreshDash()">↻ Actualizar</button>
+        <button class="btn btn-primary" onclick="openModal('pedidoModal')">+ Pedido de insumo</button>
+      </div>
     </div>
-    <span class="logo-name">Alu<span>Tech</span></span>
+    <div class="title-section">
+      <h1>Tablero de Control Ejecutivo</h1>
+      <p>Indicadores de transformación digital · Sincronización en tiempo real</p>
+    </div>
   </div>
-  <span class="topbar-title">Panel de Control · Oficina Técnica</span>
-  <div class="topbar-right">
-    <div class="pulse-dot"></div>
-    <span class="topbar-live">En línea</span>
-    <span class="topbar-date" id="topDate"></span>
-    <div class="avatar">U</div>
+
+  <!-- KPI CIRCULARES -->
+  <div class="grid kpi">
+    <div class="kpi-circular">
+      <div class="circular-chart">
+        <svg viewBox="0 0 120 120">
+          <circle class="circular-bg" cx="60" cy="60" r="54"></circle>
+          <circle class="circular-fill" id="circle1" cx="60" cy="60" r="54" style="stroke-dasharray: 170 339; stroke-dashoffset: 0;"></circle>
+        </svg>
+        <div class="circular-text">41/55</div>
+      </div>
+      <div class="kpi-label">Lead-Time Objetivo</div>
+      <div class="kpi-desc">Reducción de 55 a 41 días.</div>
+    </div>
+
+    <div class="kpi-circular">
+      <div class="circular-chart">
+        <svg viewBox="0 0 120 120">
+          <circle class="circular-bg" cx="60" cy="60" r="54"></circle>
+          <circle class="circular-fill" id="circle2" cx="60" cy="60" r="54" style="stroke: #ccc; stroke-dasharray: 51 339;"></circle>
+        </svg>
+        <div class="circular-text">9/18</div>
+      </div>
+      <div class="kpi-label">Índice de Retrabajos</div>
+      <div class="kpi-desc">Reducción del 18% al 9%.</div>
+    </div>
+
+    <div class="kpi-circular">
+      <div class="circular-chart">
+        <svg viewBox="0 0 120 120">
+          <circle class="circular-bg" cx="60" cy="60" r="54"></circle>
+          <circle class="circular-fill" id="circle3" cx="60" cy="60" r="54" style="stroke-dasharray: 305 339;"></circle>
+        </svg>
+        <div class="circular-text">90/100</div>
+      </div>
+      <div class="kpi-label">Resolución de Reclamos</div>
+      <div class="kpi-desc">90% de reclamos resueltos en menos de 48 horas.</div>
+    </div>
+
+    <div class="kpi-circular">
+      <div class="circular-chart">
+        <svg viewBox="0 0 120 120">
+          <circle class="circular-bg" cx="60" cy="60" r="54"></circle>
+          <circle class="circular-fill" id="circle4" cx="60" cy="60" r="54" style="stroke-dasharray: 339 339;"></circle>
+        </svg>
+        <div class="circular-text">24/24</div>
+      </div>
+      <div class="kpi-label">Emisión de Facturas</div>
+      <div class="kpi-desc">Saldo facturado automáticamente en menos de 24 horas.</div>
+    </div>
   </div>
-</div>
 
-<!-- LAYOUT -->
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <nav class="sidebar">
-    <div class="nav-group-label">Principal</div>
-    <div class="nav-item active" onclick="setNav(this)"><span class="icon">📊</span> Dashboard</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">🏗️</span> Obras activas <span class="nav-badge">7</span></div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">📋</span> Relevamientos</div>
-
-    <div class="nav-group-label">Producción</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">🔧</span> Órdenes CNC</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">📐</span> Archivos CAD</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">⚙️</span> CAD-CAM</div>
-
-    <div class="nav-group-label">Insumos</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">📦</span> Stock en tiempo real <span class="nav-badge warn">2</span></div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">🛒</span> Pedidos a proveedores</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">⏱️</span> Alertas de plazo <span class="nav-badge">3</span></div>
-
-    <div class="nav-group-label">Postventa</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">🎫</span> Tickets abiertos <span class="nav-badge">5</span></div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">⭐</span> NPS / Satisfacción</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">✅</span> Cierre de obras</div>
-
-    <div class="nav-group-label">Gestión</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">👥</span> Capacitaciones</div>
-    <div class="nav-item" onclick="setNav(this)"><span class="icon">📈</span> Reportes</div>
-  </nav>
-
-  <!-- MAIN CONTENT -->
-  <main class="main">
-
-    <!-- KPI ROW -->
-    <div class="kpi-row">
-      <div class="kpi-card blue">
-        <div class="kpi-label">Obras activas</div>
-        <div class="kpi-value blue">7</div>
-        <div class="kpi-sub">3 en producción · 4 en diseño</div>
-        <div class="kpi-trend up">↑ +2 vs mes anterior</div>
-      </div>
-      <div class="kpi-card warn">
-        <div class="kpi-label">Lead-time promedio</div>
-        <div class="kpi-value warn">38d</div>
-        <div class="kpi-sub">Objetivo: ≤ 41d (↓25% de 55d)</div>
-        <div class="kpi-trend up">↓ 17 días mejorados</div>
-      </div>
-      <div class="kpi-card red">
-        <div class="kpi-label">Índice de retrabajo</div>
-        <div class="kpi-value red">11%</div>
-        <div class="kpi-sub">Objetivo: &lt; 5% | Fue: 18%</div>
-        <div class="kpi-trend up">↓ 7 pp en 90 días</div>
-      </div>
-      <div class="kpi-card green">
-        <div class="kpi-label">NPS clientes</div>
-        <div class="kpi-value green">+62</div>
-        <div class="kpi-sub">Respondieron 18 / 23 enviadas</div>
-        <div class="kpi-trend up">↑ +29 puntos</div>
-      </div>
-    </div>
-
-    <!-- FILA 1: OBRAS + ALERTAS -->
-    <div class="grid3">
-
-      <!-- OBRAS ACTIVAS -->
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title"><span class="panel-icon">🏗️</span> Obras en curso</div>
-          <div class="panel-actions">
-            <button class="btn-xs primary" onclick="showSnack('Actualizando datos desde sistema...')">↻ Actualizar</button>
-          </div>
-        </div>
-        <div class="panel-body" style="padding:0;">
-          <table>
-            <thead>
-              <tr>
-                <th>Nro. Obra</th>
-                <th>Cliente</th>
-                <th>Etapa</th>
-                <th>Entrega</th>
-                <th>Stock</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="mono" style="color:var(--accent)">OBR-2025-0041</td>
-                <td>Desarrollos Norte</td>
-                <td><span class="pill pill-blue">Diseño CAD</span></td>
-                <td class="mono">28/07</td>
-                <td><span class="pill pill-green">OK</span></td>
-              </tr>
-              <tr>
-                <td class="mono" style="color:var(--accent)">OBR-2025-0038</td>
-                <td>Arq. Cattáneo</td>
-                <td><span class="pill pill-purple">CNC Activo</span></td>
-                <td class="mono">14/07</td>
-                <td><span class="pill pill-warn">⚠ Cristales</span></td>
-              </tr>
-              <tr>
-                <td class="mono" style="color:var(--accent)">OBR-2025-0035</td>
-                <td>Torres del Río</td>
-                <td><span class="pill pill-green">Despacho</span></td>
-                <td class="mono">05/07</td>
-                <td><span class="pill pill-green">OK</span></td>
-              </tr>
-              <tr>
-                <td class="mono" style="color:var(--accent)">OBR-2025-0033</td>
-                <td>Inmob. Horizonte</td>
-                <td><span class="pill pill-warn">Compras</span></td>
-                <td class="mono">22/07</td>
-                <td><span class="pill pill-red">⚠ Perfiles</span></td>
-              </tr>
-              <tr>
-                <td class="mono" style="color:var(--accent)">OBR-2025-0029</td>
-                <td>Consultora Vega</td>
-                <td><span class="pill pill-blue">Relevamiento</span></td>
-                <td class="mono">10/08</td>
-                <td><span class="pill pill-green">Pre-reserva ✓</span></td>
-              </tr>
-              <tr>
-                <td class="mono" style="color:var(--accent)">OBR-2025-0027</td>
-                <td>Arq. Palomino</td>
-                <td><span class="pill pill-blue">Presupuesto</span></td>
-                <td class="mono">15/08</td>
-                <td><span class="pill pill-green">Sin asignar</span></td>
-              </tr>
-              <tr>
-                <td class="mono" style="color:var(--accent)">OBR-2025-0022</td>
-                <td>Club Náutico CBA</td>
-                <td><span class="pill pill-green">Instalación</span></td>
-                <td class="mono">30/06</td>
-                <td><span class="pill pill-green">OK</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ALERTAS -->
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title"><span class="panel-icon">🔔</span> Alertas activas</div>
-          <div class="panel-actions">
-            <button class="btn-xs" onclick="showSnack('Todas las alertas marcadas como leídas.')">Limpiar</button>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="alert-list" id="alertList">
-            <div class="alert-item crit">
-              <div class="alert-icon-wrap">🚨</div>
-              <div class="alert-body">
-                <div class="alert-title">Stock crítico: Cristal DVH 6+6+4</div>
-                <div class="alert-sub">OBR-0038 necesita 18 m² · solo 4 m² disponibles</div>
-                <div class="alert-time">Hace 12 min · Compras</div>
-              </div>
-              <button class="alert-dismiss" onclick="dismissAlert(this)" title="Descartar">×</button>
-            </div>
-            <div class="alert-item warn2">
-              <div class="alert-icon-wrap">⚠️</div>
-              <div class="alert-body">
-                <div class="alert-title">Pedido temprano sugerido</div>
-                <div class="alert-sub">OBR-0033 · Perfiles 50×50 — proveedor: 8 días hábiles</div>
-                <div class="alert-time">Hace 1h · Sistema de compras</div>
-              </div>
-              <button class="alert-dismiss" onclick="dismissAlert(this)">×</button>
-            </div>
-            <div class="alert-item info">
-              <div class="alert-icon-wrap">📐</div>
-              <div class="alert-body">
-                <div class="alert-title">Relevamiento recibido</div>
-                <div class="alert-sub">OBR-0041 · Arq. Ferreyra · 3 aberturas pendientes de diseño</div>
-                <div class="alert-time">Hace 2h · App móvil</div>
-              </div>
-              <button class="alert-dismiss" onclick="dismissAlert(this)">×</button>
-            </div>
-            <div class="alert-item warn2">
-              <div class="alert-icon-wrap">📅</div>
-              <div class="alert-body">
-                <div class="alert-title">Plazo ajustado: OBR-0038</div>
-                <div class="alert-sub">Entrega 14/07 · cristales llegan 11/07 · margen 2 días</div>
-                <div class="alert-time">Hoy 8:30 · Planificación</div>
-              </div>
-              <button class="alert-dismiss" onclick="dismissAlert(this)">×</button>
-            </div>
-            <div class="alert-item ok2">
-              <div class="alert-icon-wrap">✅</div>
-              <div class="alert-body">
-                <div class="alert-title">Pre-reserva confirmada</div>
-                <div class="alert-sub">OBR-0029 · Todos los insumos pre-reservados sin conflicto</div>
-                <div class="alert-time">Ayer 16:45 · Stock automático</div>
-              </div>
-              <button class="alert-dismiss" onclick="dismissAlert(this)">×</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FILA 2: STOCK + CADCAM -->
-    <div class="grid2">
-
-      <!-- STOCK SEMÁFORO -->
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title"><span class="panel-icon">📦</span> Sincronización de Stock · Tiempo real</div>
-          <div class="panel-actions">
-            <button class="btn-xs primary" onclick="animateStock()">↻ Sincronizar</button>
-            <button class="btn-xs" onclick="openModal('pedidoModal')">+ Pedido de insumo</button>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="stock-row" id="stockRow">
-            <!-- JS generated -->
-          </div>
-        </div>
-      </div>
-
-      <!-- CAD-CAM PIPELINE -->
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title"><span class="panel-icon">⚙️</span> Protocolo CAD-CAM · OBR-0041</div>
-          <div class="panel-actions">
-            <button class="btn-xs primary" onclick="advancePipeline()">Avanzar etapa →</button>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="cadcam-pipeline" id="cadcamList"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FILA 3: RECLAMOS + CIERRE + NPS -->
-    <div class="grid3">
-
-      <!-- TICKETS RECLAMOS -->
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title"><span class="panel-icon">🎫</span> Gestión de reclamos y tickets</div>
-          <div class="panel-actions">
-            <button class="btn-xs" onclick="showSnack('Exportando informe de reclamos...')">Exportar</button>
-            <button class="btn-xs primary" onclick="openModal('nuevoTicketModal')">+ Nuevo ticket</button>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="reclamo-row">
-            <div class="reclamo-stat">
-              <div class="reclamo-num" style="color:var(--danger)">5</div>
-              <div class="reclamo-lbl">Tickets abiertos</div>
-            </div>
-            <div class="reclamo-stat">
-              <div class="reclamo-num" style="color:var(--warn)">2</div>
-              <div class="reclamo-lbl">Fuera de plazo</div>
-            </div>
-            <div class="reclamo-stat">
-              <div class="reclamo-num" style="color:var(--accent2)">12</div>
-              <div class="reclamo-lbl">Resueltos este mes</div>
-            </div>
-            <div class="reclamo-stat">
-              <div class="reclamo-num" style="color:var(--accent2)">88%</div>
-              <div class="reclamo-lbl">Tasa resolución</div>
-            </div>
-          </div>
-
-          <div class="ticket-list">
-            <div class="ticket">
-              <span class="ticket-id">TKT-0091</span>
-              <span class="ticket-desc">Herraje equivocado · OBR-0035 · Inst. Ortega</span>
-              <span class="pill pill-red" style="font-size:9px;flex-shrink:0">Abierto</span>
-              <button class="ticket-action" onclick="showSnack('Ticket TKT-0091 reasignado a Compras.')">→ Asignar</button>
-            </div>
-            <div class="ticket">
-              <span class="ticket-id">TKT-0087</span>
-              <span class="ticket-desc">Ventana 3cm más angosta · OBR-0022</span>
-              <span class="pill pill-warn" style="font-size:9px;flex-shrink:0">En proceso</span>
-              <button class="ticket-action" onclick="showSnack('Abriendo detalle de TKT-0087...')">Ver</button>
-            </div>
-            <div class="ticket">
-              <span class="ticket-id">TKT-0085</span>
-              <span class="ticket-desc">Retraso sin aviso al cliente · OBR-0033</span>
-              <span class="pill pill-red" style="font-size:9px;flex-shrink:0">⚠ Escalado</span>
-              <button class="ticket-action" onclick="showSnack('Notificando a gerencia...')">Escalar</button>
-            </div>
-            <div class="ticket">
-              <span class="ticket-id">TKT-0082</span>
-              <span class="ticket-desc">Consulta post-venta · OBR-0029 · Sellado</span>
-              <span class="pill pill-green" style="font-size:9px;flex-shrink:0">Resuelto</span>
-              <button class="ticket-action" onclick="showSnack('Encuesta NPS enviada a cliente.')">NPS →</button>
-            </div>
-            <div class="ticket">
-              <span class="ticket-id">TKT-0079</span>
-              <span class="ticket-desc">Reclamo redes sociales · Retraso entrega</span>
-              <span class="pill pill-warn" style="font-size:9px;flex-shrink:0">En proceso</span>
-              <button class="ticket-action" onclick="showSnack('Historial del cliente abierto.')">Ver</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PANEL DERECHO: CIERRE + NPS -->
-      <div style="display:flex;flex-direction:column;gap:16px;">
-
-        <!-- CIERRE DE OBRA -->
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title"><span class="panel-icon">✅</span> Cierre de obra · OBR-0035</div>
-          </div>
-          <div class="panel-body">
-            <div class="cierre-checklist">
-              <div class="check-item"><div class="check-box cb-done">✓</div><span>Conformidad del cliente registrada</span></div>
-              <div class="check-item"><div class="check-box cb-done">✓</div><span>Comprobante legal generado</span></div>
-              <div class="check-item"><div class="check-box cb-done">✓</div><span>Factura saldo 50% habilitada</span></div>
-              <div class="check-item"><div class="check-box cb-pending"></div><span class="cb-pend-txt">Nro. de obra cerrado en sistema</span></div>
-              <div class="check-item"><div class="check-box cb-pending"></div><span class="cb-pend-txt">Encuesta NPS enviada</span></div>
-            </div>
-            <button class="btn-xs primary" style="width:100%;margin-top:12px;padding:8px;" onclick="cerrarObra()">Cerrar obra y emitir factura</button>
-          </div>
-        </div>
-
-        <!-- NPS -->
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title"><span class="panel-icon">⭐</span> NPS post-instalación</div>
-          </div>
-          <div class="panel-body">
-            <div class="nps-score">
-              <div class="nps-num">+62</div>
-              <div class="nps-label">Net Promoter Score · últimas 18 respuestas</div>
-            </div>
-            <div class="nps-bar-row" id="npsChart"></div>
-            <div style="display:flex;justify-content:space-between;margin-top:6px;">
-              <span style="font-size:10px;color:var(--danger)">Detractores 0–6</span>
-              <span style="font-size:10px;color:var(--warn)">Pasivos 7–8</span>
-              <span style="font-size:10px;color:var(--accent2)">Promotores 9–10</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- LEAD TIME CHART -->
+  <!-- OBRAS Y STOCK -->
+  <div class="grid">
+    <!-- OBRAS EN CURSO -->
     <div class="panel">
       <div class="panel-header">
-        <div class="panel-title"><span class="panel-icon">📈</span> Evolución lead-time mensual (días promedio)</div>
-        <div class="panel-actions">
-          <button class="btn-xs" onclick="showSnack('Exportando reporte en PDF...')">Exportar</button>
-        </div>
+        <div class="panel-title"><span class="panel-icon">🏗️</span> Obras en curso</div>
+        <button class="btn" onclick="refreshObras()">↻ Actualizar</button>
       </div>
       <div class="panel-body">
-        <div class="mini-chart" id="ltChart" style="height:80px;"></div>
-        <div class="chart-labels" id="ltLabels"></div>
-        <div style="display:flex;gap:20px;margin-top:10px;flex-wrap:wrap;">
-          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent)"></div>Lead-time real</div>
-          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:rgba(239,68,68,0.4)"></div>Objetivo ≤41d</div>
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Nro. Obra</th>
+              <th>Cliente</th>
+              <th>Etapa</th>
+              <th>Entrega</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody id="obrasTable">
+            <tr>
+              <td class="obra">OBR-2025-0041</td>
+              <td>Desarrollos Norte</td>
+              <td><span class="badge badge-blue">Diseño CAD</span></td>
+              <td>28/07</td>
+              <td><span class="badge badge-green" style="background:rgba(16,185,129,0.15);color:var(--accent2);">✓ OK</span></td>
+            </tr>
+            <tr>
+              <td class="obra">OBR-2025-0038</td>
+              <td>Arq. Cattáneo</td>
+              <td><span class="badge badge-blue">CNC Activo</span></td>
+              <td>14/07</td>
+              <td><span class="badge badge-yellow">⚠ Cristales</span></td>
+            </tr>
+            <tr>
+              <td class="obra">OBR-2025-0035</td>
+              <td>Torres del Río</td>
+              <td><span class="badge badge-green" style="background:rgba(16,185,129,0.15);color:var(--accent2);">Despacho</span></td>
+              <td>05/07</td>
+              <td><span class="badge badge-green" style="background:rgba(16,185,129,0.15);color:var(--accent2);">✓ OK</span></td>
+            </tr>
+            <tr>
+              <td class="obra">OBR-2025-0033</td>
+              <td>Inmob. Horizonte</td>
+              <td><span class="badge badge-yellow">Compras</span></td>
+              <td>22/07</td>
+              <td><span class="badge badge-red">⚠ Perfiles</span></td>
+            </tr>
+            <tr>
+              <td class="obra">OBR-2025-0029</td>
+              <td>Consultora Vega</td>
+              <td><span class="badge badge-blue">Relevamiento</span></td>
+              <td>10/08</td>
+              <td><span class="badge badge-green" style="background:rgba(16,185,129,0.15);color:var(--accent2);">✓ Pre-reserva</span></td>
+            </tr>
+            <tr>
+              <td class="obra">OBR-2025-0027</td>
+              <td>Arq. Palomino</td>
+              <td><span class="badge badge-blue">Presupuesto</span></td>
+              <td>15/08</td>
+              <td><span class="badge badge-green" style="background:rgba(16,185,129,0.15);color:var(--accent2);">Sin asignar</span></td>
+            </tr>
+            <tr>
+              <td class="obra">OBR-2025-0022</td>
+              <td>Club Náutico CBA</td>
+              <td><span class="badge badge-green" style="background:rgba(16,185,129,0.15);color:var(--accent2);">Instalación</span></td>
+              <td>30/06</td>
+              <td><span class="badge badge-green" style="background:rgba(16,185,129,0.15);color:var(--accent2);">✓ OK</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-  </main>
+    <!-- SINCRONIZACIÓN STOCK -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title"><span class="panel-icon">📦</span> Sincronización de Stock · Tiempo real</div>
+        <button class="btn" onclick="syncStock()">↻ Sincronizar</button>
+      </div>
+      <div class="panel-body" id="stockContainer">
+        <div class="stock-item">
+          <div class="stock-header">
+            <span class="stock-name"><span class="stock-emoji">🔩</span> Perfiles Alum. 50×50</span>
+            <div class="stock-status">
+              <span class="badge" style="background:rgba(239,68,68,0.15);color:var(--danger);padding:2px 8px;font-size:10px;">⚠ Crítico</span>
+              <span class="stock-percent crit">22%</span>
+            </div>
+          </div>
+          <div class="stock-bar"><div class="stock-bar-fill crit" style="width:22%;"></div></div>
+          <div class="stock-detail"><span>Stock: 120 kg</span><span>Necesario: 550 kg</span></div>
+        </div>
+
+        <div class="stock-item">
+          <div class="stock-header">
+            <span class="stock-name"><span class="stock-emoji">🪟</span> Cristal DVH 6+6+4</span>
+            <div class="stock-status">
+              <span class="badge" style="background:rgba(239,68,68,0.15);color:var(--danger);padding:2px 8px;font-size:10px;">⚠ Crítico</span>
+              <span class="stock-percent crit">18%</span>
+            </div>
+          </div>
+          <div class="stock-bar"><div class="stock-bar-fill crit" style="width:18%;"></div></div>
+          <div class="stock-detail"><span>Stock: 4 m²</span><span>Necesario: 22 m²</span></div>
+        </div>
+
+        <div class="stock-item">
+          <div class="stock-header">
+            <span class="stock-name"><span class="stock-emoji">🔩</span> Perfiles Alum. 35×50</span>
+            <div class="stock-status">
+              <span class="badge" style="background:rgba(245,158,11,0.15);color:var(--warn);padding:2px 8px;font-size:10px;">Bajo stock</span>
+              <span class="stock-percent warn">58%</span>
+            </div>
+          </div>
+          <div class="stock-bar"><div class="stock-bar-fill warn" style="width:58%;"></div></div>
+          <div class="stock-detail"><span>Stock: 310 kg</span><span>Necesario: 530 kg</span></div>
+        </div>
+
+        <div class="stock-item">
+          <div class="stock-header">
+            <span class="stock-name"><span class="stock-emoji">🔧</span> Herrajes standard</span>
+            <div class="stock-status">
+              <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--accent2);padding:2px 8px;font-size:10px;">Disponible</span>
+              <span class="stock-percent ok">76%</span>
+            </div>
+          </div>
+          <div class="stock-bar"><div class="stock-bar-fill ok" style="width:76%;"></div></div>
+          <div class="stock-detail"><span>Stock: 380 sets</span><span>Necesario: 500 sets</span></div>
+        </div>
+
+        <div class="stock-item">
+          <div class="stock-header">
+            <span class="stock-name"><span class="stock-emoji">⬜</span> PVC blanco 60mm</span>
+            <div class="stock-status">
+              <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--accent2);padding:2px 8px;font-size:10px;">Disponible</span>
+              <span class="stock-percent ok">82%</span>
+            </div>
+          </div>
+          <div class="stock-bar"><div class="stock-bar-fill ok" style="width:82%;"></div></div>
+          <div class="stock-detail"><span>Stock: 200 m</span><span>Necesario: 244 m</span></div>
+        </div>
+
+        <div class="stock-item">
+          <div class="stock-header">
+            <span class="stock-name"><span class="stock-emoji">🪟</span> Cristal Templado 8mm</span>
+            <div class="stock-status">
+              <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--accent2);padding:2px 8px;font-size:10px;">Disponible</span>
+              <span class="stock-percent ok">64%</span>
+            </div>
+          </div>
+          <div class="stock-bar"><div class="stock-bar-fill ok" style="width:64%;"></div></div>
+          <div class="stock-detail"><span>Stock: 32 m²</span><span>Necesario: 50 m²</span></div>
+        </div>
+
+        <div class="stock-item">
+          <div class="stock-header">
+            <span class="stock-name"><span class="stock-emoji">🧴</span> Burletes y selladores</span>
+            <div class="stock-status">
+              <span class="badge" style="background:rgba(16,185,129,0.15);color:var(--accent2);padding:2px 8px;font-size:10px;">Disponible</span>
+              <span class="stock-percent ok">91%</span>
+            </div>
+          </div>
+          <div class="stock-bar"><div class="stock-bar-fill ok" style="width:91%;"></div></div>
+          <div class="stock-detail"><span>Stock: 450 m</span><span>Necesario: 494 m</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALERTAS -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title"><span class="panel-icon">🔔</span> Alertas activas</div>
+      <button class="btn" onclick="clearAlerts()">Limpiar</button>
+    </div>
+    <div class="panel-body">
+      <div class="alerts-container" id="alertsContainer">
+        <div class="alert-item crit">
+          <div class="alert-icon">🚨</div>
+          <div class="alert-body">
+            <div class="alert-title">Stock crítico: Cristal DVH 6+6+4</div>
+            <div class="alert-desc">OBR-0038 necesita 18 m² · solo 4 m² disponibles</div>
+            <div class="alert-time">Hace 12 min · Compras</div>
+          </div>
+          <button class="alert-close" onclick="removeAlert(this)">×</button>
+        </div>
+
+        <div class="alert-item warn">
+          <div class="alert-icon">⚠️</div>
+          <div class="alert-body">
+            <div class="alert-title">Pedido temprano sugerido</div>
+            <div class="alert-desc">OBR-0033 · Perfiles 50×50 — proveedor: 8 días hábiles</div>
+            <div class="alert-time">Hace 1h · Sistema de compras</div>
+          </div>
+          <button class="alert-close" onclick="removeAlert(this)">×</button>
+        </div>
+
+        <div class="alert-item info">
+          <div class="alert-icon">📐</div>
+          <div class="alert-body">
+            <div class="alert-title">Relevamiento recibido</div>
+            <div class="alert-desc">OBR-0041 · Arq. Ferreyra · 3 aberturas pendientes de diseño</div>
+            <div class="alert-time">Hace 2h · App móvil</div>
+          </div>
+          <button class="alert-close" onclick="removeAlert(this)">×</button>
+        </div>
+
+        <div class="alert-item warn">
+          <div class="alert-icon">📅</div>
+          <div class="alert-body">
+            <div class="alert-title">Plazo ajustado: OBR-0038</div>
+            <div class="alert-desc">Entrega 14/07 · cristales llegan 11/07 · margen 2 días</div>
+            <div class="alert-time">Hoy 8:30 · Planificación</div>
+          </div>
+          <button class="alert-close" onclick="removeAlert(this)">×</button>
+        </div>
+
+        <div class="alert-item ok">
+          <div class="alert-icon">✅</div>
+          <div class="alert-body">
+            <div class="alert-title">Pre-reserva confirmada</div>
+            <div class="alert-desc">OBR-0029 · Todos los insumos pre-reservados sin conflicto</div>
+            <div class="alert-time">Ayer 16:45 · Stock automático</div>
+          </div>
+          <button class="alert-close" onclick="removeAlert(this)">×</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- MODALS -->
+<!-- MODAL PEDIDO -->
 <div class="modal-overlay" id="pedidoModal" onclick="closeModal('pedidoModal', event)">
   <div class="modal">
-    <div class="modal-title">📦 Pedido de insumo — Aviso temprano</div>
-    <div class="modal-body">
-      <p>Se va a generar un <strong>Aviso de Pedido Temprano</strong> al proveedor para la obra seleccionada. El sistema cruzará los tiempos de entrega con el cronograma y reservará el stock automáticamente.</p>
-      <br>
-      <select style="width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:Inter;font-size:13px;padding:9px 11px;margin-bottom:10px;outline:none;">
-        <option>OBR-2025-0033 — Perfiles 50×50 (crítico)</option>
-        <option>OBR-2025-0038 — Cristal DVH 6+6+4</option>
-        <option>OBR-2025-0041 — Herrajes standard</option>
-      </select>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-modal btn-modal-sec" onclick="closeModal('pedidoModal')">Cancelar</button>
-      <button class="btn-modal btn-modal-pri" onclick="confirmarPedido()">Enviar aviso a proveedor</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="nuevoTicketModal" onclick="closeModal('nuevoTicketModal', event)">
-  <div class="modal">
-    <div class="modal-title">🎫 Nuevo ticket de reclamo</div>
-    <div class="modal-body">
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div>
-          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Obra relacionada</label>
-          <select style="width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:Inter;font-size:13px;padding:9px 11px;outline:none;">
-            <option>OBR-2025-0035</option><option>OBR-2025-0038</option><option>OBR-2025-0041</option>
-          </select>
-        </div>
-        <div>
-          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Categoría</label>
-          <select style="width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:Inter;font-size:13px;padding:9px 11px;outline:none;">
-            <option>Error de medidas</option><option>Herraje incorrecto</option><option>Retraso en entrega</option><option>Defecto de terminación</option><option>Consulta post-venta</option>
-          </select>
-        </div>
-        <div>
-          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Descripción</label>
-          <textarea placeholder="Describí el problema..." style="width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:Inter;font-size:13px;padding:9px 11px;min-height:80px;resize:none;outline:none;"></textarea>
-        </div>
+    <div class="modal-title">📦 Realizar Pedido Temprano a Proveedor</div>
+    <div class="modal-form">
+      <div class="form-group">
+        <label>Obra relacionada</label>
+        <select>
+          <option>OBR-2025-0033 — Perfiles 50×50 (crítico)</option>
+          <option>OBR-2025-0038 — Cristal DVH 6+6+4</option>
+          <option>OBR-2025-0041 — Herrajes standard</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Insumo a pedir</label>
+        <input type="text" placeholder="Ej: Perfiles Aluminio 50×50" />
+      </div>
+      <div class="form-group">
+        <label>Cantidad</label>
+        <input type="text" placeholder="Ej: 550 kg" />
+      </div>
+      <div class="form-group">
+        <label>Proveedor</label>
+        <select>
+          <option>Alumec (8 días hábiles)</option>
+          <option>Vidriería Central (5 días)</option>
+          <option>Herrajes Córdoba (3 días)</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-cancel" onclick="closeModal('pedidoModal')">Cancelar</button>
+        <button class="btn btn-confirm" onclick="confirmarPedido()">Enviar pedido</button>
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn-modal btn-modal-sec" onclick="closeModal('nuevoTicketModal')">Cancelar</button>
-      <button class="btn-modal btn-modal-pri" onclick="crearTicket()">Crear ticket</button>
-    </div>
   </div>
 </div>
 
-<!-- SNACKBAR -->
-<div class="snack" id="snack"></div>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script>
-  // ─── DATE ────────────────────────────────────────────────────
-  const now = new Date();
-  document.getElementById('topDate').textContent =
-    now.toLocaleDateString('es-AR', { weekday:'short', day:'2-digit', month:'short', year:'numeric' }) +
-    ' · ' + now.toLocaleTimeString('es-AR', { hour:'2-digit', minute:'2-digit' });
-
-  // ─── SNACKBAR ────────────────────────────────────────────────
-  function showSnack(msg) {
-    const el = document.getElementById('snack');
-    el.innerHTML = '✅ ' + msg;
-    el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 3500);
-  }
-
-  // ─── NAV ─────────────────────────────────────────────────────
-  function setNav(el) {
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    el.classList.add('active');
-  }
-
-  // ─── MODAL ───────────────────────────────────────────────────
+  // MODAL
   function openModal(id) {
     document.getElementById(id).classList.add('open');
   }
   function closeModal(id, e) {
-    if (!e || e.target.id === id) document.getElementById(id).classList.remove('open');
-  }
-
-  function confirmarPedido() {
-    closeModal('pedidoModal');
-    showSnack('Aviso de Pedido Temprano enviado. Sistema actualiza cronograma.');
-  }
-  function crearTicket() {
-    closeModal('nuevoTicketModal');
-    showSnack('Ticket TKT-0092 creado y asignado automáticamente.');
-  }
-
-  // ─── ALERTS ──────────────────────────────────────────────────
-  function dismissAlert(btn) {
-    const item = btn.closest('.alert-item');
-    item.style.opacity = '0';
-    item.style.height = item.offsetHeight + 'px';
-    item.style.transition = 'opacity 0.2s, height 0.3s 0.2s, margin 0.3s 0.2s, padding 0.3s 0.2s';
-    setTimeout(() => { item.style.height = '0'; item.style.padding = '0'; item.style.margin = '0'; item.style.overflow = 'hidden'; }, 10);
-    setTimeout(() => item.remove(), 500);
-    showSnack('Alerta descartada.');
-  }
-
-  // ─── STOCK ───────────────────────────────────────────────────
-  const stockData = [
-    { name:'Perfiles Alum. 50×50', emoji:'🔩', pct:22, unit:'120 kg', needed:'550 kg', status:'crit', label:'⚠ Crítico' },
-    { name:'Cristal DVH 6+6+4', emoji:'🪟', pct:18, unit:'4 m²', needed:'22 m²', status:'crit', label:'⚠ Crítico' },
-    { name:'Perfiles Alum. 35×50', emoji:'🔩', pct:58, unit:'310 kg', needed:'530 kg', status:'warn', label:'Bajo stock' },
-    { name:'Herrajes standard', emoji:'🔧', pct:76, unit:'380 sets', needed:'500 sets', status:'ok', label:'Disponible' },
-    { name:'PVC blanco 60mm', emoji:'⬜', pct:82, unit:'200 m', needed:'244 m', status:'ok', label:'Disponible' },
-    { name:'Cristal Templado 8mm', emoji:'🪟', pct:64, unit:'32 m²', needed:'50 m²', status:'ok', label:'Disponible' },
-    { name:'Burletes y selladores', emoji:'🧴', pct:91, unit:'450 m', needed:'494 m', status:'ok', label:'Disponible' },
-  ];
-
-  function renderStock() {
-    const row = document.getElementById('stockRow');
-    row.innerHTML = stockData.map(s => `
-      <div class="stock-item">
-        <div class="stock-top">
-          <span class="stock-name"><span class="stock-emoji">${s.emoji}</span> ${s.name}</span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="stock-alert ${s.status==='ok'?'sa-ok':s.status==='warn'?'sa-warn':'sa-crit'}">${s.label}</span>
-            <span class="stock-pct" style="color:${s.status==='ok'?'var(--accent2)':s.status==='warn'?'var(--warn)':'var(--danger)'}">${s.pct}%</span>
-          </div>
-        </div>
-        <div class="bar-wrap">
-          <div class="bar-fill ${s.status==='ok'?'bar-green':s.status==='warn'?'bar-warn':'bar-red'}" style="width:${s.pct}%"></div>
-        </div>
-        <div class="stock-detail"><span>Stock: ${s.unit}</span><span>Necesario: ${s.needed}</span></div>
-      </div>
-    `).join('');
-  }
-  renderStock();
-
-  function animateStock() {
-    const bars = document.querySelectorAll('.bar-fill');
-    bars.forEach(b => { b.style.width = '0'; });
-    setTimeout(() => {
-      stockData.forEach((s, i) => {
-        bars[i].style.width = s.pct + '%';
-      });
-    }, 100);
-    showSnack('Stock sincronizado con inventario contable.');
-  }
-
-  // ─── CAD-CAM ─────────────────────────────────────────────────
-  const cadcamSteps = [
-    { title:'Relevamiento recibido', sub:'App móvil · Arq. Ferreyra · 3 aberturas', status:'done' },
-    { title:'Diseño en AutoCAD completado', sub:'Archivo: OBR0041_v3.dwg · 24/06/2025', status:'done' },
-    { title:'Exportación via postprocesador', sub:'CAM2CNC v3.1 · generando .nc...', status:'active' },
-    { title:'Validación del archivo en máquina', sub:'CNC Schüco WS 75 · pendiente operario', status:'pending' },
-    { title:'Prueba de corte piloto', sub:'Pieza testigo antes de producción', status:'pending' },
-    { title:'Producción en línea', sub:'Órdenes automáticas sin carga manual', status:'pending' },
-    { title:'Validación QA sin intervención', sub:'Protocolo digital aprobado', status:'pending' },
-  ];
-
-  let pipelineState = 2;
-
-  function renderPipeline() {
-    document.getElementById('cadcamList').innerHTML = cadcamSteps.map((s, i) => {
-      const cls = i < pipelineState ? 'step-done' : i === pipelineState ? 'step-active' : 'step-pending';
-      const icon = i < pipelineState ? '✓' : i === pipelineState ? '▶' : String(i + 1);
-      return `
-        <div class="pipeline-step">
-          <div class="step-num ${cls}">${icon}</div>
-          <div class="step-body">
-            <div class="step-title">${s.title}</div>
-            <div class="step-sub">${s.sub}</div>
-          </div>
-          ${i < pipelineState ? '<span class="pill pill-green" style="font-size:9px;flex-shrink:0">✓</span>' : 
-            i === pipelineState ? '<span class="pill pill-blue" style="font-size:9px;flex-shrink:0">Activo</span>' : ''}
-        </div>
-      `;
-    }).join('');
-  }
-  renderPipeline();
-
-  function advancePipeline() {
-    if (pipelineState < cadcamSteps.length - 1) {
-      pipelineState++;
-      renderPipeline();
-      showSnack(`Etapa "${cadcamSteps[pipelineState].title}" iniciada.`);
-    } else {
-      showSnack('¡Protocolo CAD-CAM completado! Producción validada sin intervención manual.');
+    if (!e || e.target.id === id) {
+      document.getElementById(id).classList.remove('open');
     }
   }
-
-  // ─── LEAD TIME CHART ─────────────────────────────────────────
-  const ltData = [55, 53, 51, 49, 47, 45, 43, 41, 40, 38];
-  const ltMonths = ['Sep','Oct','Nov','Dic','Ene','Feb','Mar','Abr','May','Jun'];
-  const maxLT = Math.max(...ltData);
-
-  const ltChart = document.getElementById('ltChart');
-  const ltLabels = document.getElementById('ltLabels');
-
-  ltData.forEach((v, i) => {
-    const pct = (v / maxLT) * 100;
-    const col = document.createElement('div');
-    col.className = 'bar-col';
-    col.style.cssText = `height:${pct}%; background:${v > 41 ? 'rgba(239,68,68,0.6)' : 'var(--accent)'}; border-radius:3px 3px 0 0;`;
-    col.title = `${ltMonths[i]}: ${v} días`;
-    col.addEventListener('click', () => showSnack(`${ltMonths[i]}: ${v} días promedio de lead-time`));
-    ltChart.appendChild(col);
-  });
-
-  ltMonths.forEach(m => {
-    const sp = document.createElement('span');
-    sp.textContent = m;
-    ltLabels.appendChild(sp);
-  });
-
-  // ─── NPS CHART ───────────────────────────────────────────────
-  const npsData = [
-    { score: 10, count: 7, color: 'var(--accent2)' },
-    { score: 9,  count: 5, color: 'var(--accent2)' },
-    { score: 8,  count: 3, color: 'var(--warn)' },
-    { score: 7,  count: 2, color: 'var(--warn)' },
-    { score: 6,  count: 1, color: 'var(--danger)' },
-  ];
-  const maxNPS = Math.max(...npsData.map(d => d.count));
-  const npsChart = document.getElementById('npsChart');
-  npsData.forEach(d => {
-    const bar = document.createElement('div');
-    bar.className = 'nps-bar';
-    const h = (d.count / maxNPS) * 100;
-    bar.style.cssText = `height:${h}%;background:${d.color};border-radius:3px 3px 0 0;flex:1;align-self:flex-end;cursor:pointer;`;
-    bar.title = `Puntaje ${d.score}: ${d.count} respuestas`;
-    bar.addEventListener('click', () => showSnack(`Puntaje ${d.score}: ${d.count} cliente(s)`));
-    npsChart.appendChild(bar);
-  });
-
-  // ─── CIERRE DE OBRA ──────────────────────────────────────────
-  function cerrarObra() {
-    openModal('cierreModal');
+  function confirmarPedido() {
+    closeModal('pedidoModal');
+    showToast('✅ Pedido temprano enviado a proveedor. Sistema actualiza cronograma automáticamente.');
   }
 
-  // Crear modal de cierre
-  const cierreModal = document.createElement('div');
-  cierreModal.id = 'cierreModal';
-  cierreModal.className = 'modal-overlay';
-  cierreModal.setAttribute('onclick', "closeModal('cierreModal', event)");
-  cierreModal.innerHTML = `
-    <div class="modal">
-      <div class="modal-title">✅ Cerrar obra OBR-2025-0035</div>
-      <div class="modal-body">
-        <p>Al confirmar, el sistema va a:</p>
-        <br>
-        <ul style="padding-left:18px;display:flex;flex-direction:column;gap:8px;">
-          <li>Registrar la conformidad del cliente</li>
-          <li>Generar comprobante legal automáticamente</li>
-          <li>Habilitar la factura por saldo del <strong>50% restante</strong></li>
-          <li>Cerrar el Nro. de Obra en el sistema contable</li>
-          <li>Disparar encuesta NPS automática al cliente</li>
-        </ul>
-      </div>
-      <div class="modal-actions">
-        <button class="btn-modal btn-modal-sec" onclick="closeModal('cierreModal')">Cancelar</button>
-        <button class="btn-modal btn-modal-green" onclick="confirmarCierre()">Confirmar cierre y facturar</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(cierreModal);
+  // ALERTAS
+  function removeAlert(btn) {
+    const alert = btn.closest('.alert-item');
+    alert.style.opacity = '0';
+    alert.style.transform = 'translateX(20px)';
+    setTimeout(() => alert.remove(), 300);
+  }
+  function clearAlerts() {
+    const container = document.getElementById('alertsContainer');
+    container.innerHTML = '<p style="color:var(--muted);font-size:12px;text-align:center;padding:20px;">No hay alertas activas</p>';
+    showToast('✅ Todas las alertas fueron marcadas como leídas.');
+  }
 
-  function confirmarCierre() {
-    closeModal('cierreModal');
-    // Marcar todos los checks
-    document.querySelectorAll('.cb-pending').forEach(cb => {
-      cb.className = 'check-box cb-done';
-      cb.textContent = '✓';
+  // ACCIONES
+  function refreshDash() {
+    showToast('↻ Dashboard actualizado en tiempo real');
+  }
+  function refreshObras() {
+    showToast('↻ Datos de obras sincronizados');
+  }
+  function syncStock() {
+    showToast('↻ Stock sincronizado con inventario contable');
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  // ANIMACIÓN CÍRCULOS
+  window.addEventListener('load', () => {
+    const circles = document.querySelectorAll('.circular-fill');
+    circles.forEach((circle, i) => {
+      circle.style.strokeDasharray = ['170', '51', '305', '339'][i] + ' 339';
+      circle.style.strokeDashoffset = '0';
     });
-    document.querySelectorAll('.cb-pend-txt').forEach(t => t.removeAttribute('class'));
-    showSnack('OBR-0035 cerrada. Factura emitida y NPS enviado al cliente.');
-  }
+  });
 </script>
 </body>
 </html>
